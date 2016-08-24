@@ -1,0 +1,17 @@
+<h1>All Products</h1>
+<div>
+
+<select category="Category [role_id]">
+  <option value="">All</option>
+  <option value="1" selected="selected">Administrator</option>
+  <option value="2">User</option>
+  <option value="3">Editor</option>
+</select>
+</div><br>
+
+<% @products.each do |que| %>
+<%= link_to que.title, product_path(que) %>
+<hr>
+
+<% end %>
+<%= paginate @products %>

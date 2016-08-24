@@ -1,0 +1,49 @@
+<h1><%= @product.title %></h1>
+<p>
+  <%= @product.description %>
+</p>
+<%= link_to "Edit", edit_product_path(@product) %>
+<%= link_to "Delete", product_path(@product),
+                      method: :delete,
+                      data: {confirm: "Are you sure?"} %>
+<hr>
+
+<h2>Create a Review</h2>
+
+<%#= form_for @review, url: question_answers_path(@product) do |f| %>
+<%#
+  form_for [@product, @review]
+  this will generate a form for @review. For example if you have a field `description`
+  the `name` attribute will actually be: review[description]
+
+  the @product part is only used to generate the action url for the form.
+
+  If @review is not persisted the url will be: question_answers_path(@product)
+  If @review is persisted the url will:        question_answer_path(@product, @review)
+ %>
+<%= @review.errors.full_messages.join(", ")  %>
+<%= form_for [@product, @review] do |f| %>
+  <div>
+    <%= f.text_area :body %></br>
+    <%=f.number_field :star %>
+  </div>
+  <div>
+    <select category="Category [role_id]">
+      <option value="">All</option>
+      <option value="1" selected="selected">Administrator</option>
+      <option value="2">User</option>
+      <option value="3">Editor</option>
+    </select>
+  </div>
+  <%= f.submit %>
+<% end %>
+
+<h2>Reviews</h2>
+<% @product.reviews.each do |ans| %>
+  <%= ans.body %>
+  <%= ans.star %>
+  <%= link_to 'Delete', product_review_path(@product, ans),
+                        method: :delete,
+                        data: {confirm: 'Are you sure?'} %>
+  <hr>
+<% end %>
